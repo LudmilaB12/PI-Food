@@ -80,14 +80,18 @@ router.get('/recipes', async(req, res) => {
  
 
 router.get('/recipes/:id', async(req, res) =>{ //aún no funciona
-    const {id} = id.params;
-    try {
-        const totalRecipes = await getAllinfo()
-        let recipeID = await totalRecipes.filter(el => el.id === id)
-        res.status(200).send(recipeID)
-    } catch(err){
-        res.status(404).send("Receta no encontrada")
-        console.log(err)
+    const {id} = req.params;
+    if(id){
+        try {
+            const totalRecipes = await getAllinfo()
+            let recipeID = await totalRecipes.filter(el => el.id == id)
+            console.log(recipeID)
+            recipeID.length ?
+            res.status(200).json(recipeID) :
+            res.status(404).send("Receta no encontrada")
+        } catch(err){
+            console.log(err)
+        }
     }
 })
 
