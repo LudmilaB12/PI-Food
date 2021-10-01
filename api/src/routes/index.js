@@ -24,28 +24,39 @@ router.get('/recipes', async(req, res) => {
     
     if(name){
         try{
-        let apiRecipes = await getApiInfo() //me traigo las recetas de la api (faltan las de bases de datos)
-            
-        let filterDB = await Recipe.findAll({
-                where: {
-                    name: {
-                        [Op.ilike]: `%${name}%`
-                    }
-                }
-                , include: {
-                    model: Diet,
-                    through:{
-                        atributes: ["name","id"],
-                    }
-                }
-             });
-            
-        let filterRecipe = apiRecipes.filter(el => el.name.toLowerCase().includes(name.toLowerCase())) //me traigo todas las recetas dentro de la api que tengan el query
-        console.log(filterRecipe)
-        res.status(200).send(filterRecipe)
-            } catch(err){
-                res.status(404).send("Receta no encontrada")
-            }
+            const allRecipes = await getAllinfo()
+            let filterName = await allRecipes.filter( el => el.name.toLowerCase().includes(name.toLowerCase())) //me traigo toda la info y la filtro
+            console.log(filterName)
+            res.status(200).send(filterName)
+          
+        // let apiRecipes = await getApiInfo() //me traigo las recetas de la api (faltan las de bases de datos)
+        
+        // let filterDB = await Recipe.findAll({
+        //         where: {
+        //             name: {
+        //                 name: name
+        //             }
+        //         }
+        //         , include: {
+        //             model: Diet,
+        //             through:{
+        //                 atributes: ["name","id"],
+        //             }
+        //         }
+        //      });
+
+        // console.log(filterDB)  
+        // let filterRecipe = apiRecipes.filter(el => el.name.toLowerCase().includes(name.toLowerCase())) //me traigo todas las recetas dentro de la api que tengan el query
+        // res.status(200).send(filterRecipe)
+        //     } catch(err){
+        //         res.status(404).send("Receta no encontrada")
+        //     }
+
+
+
+        }catch(err){
+            res.status(404).send("No se pudo encontrar recetas")
+        }
         } else {
         const allRecipes = await getAllinfo()
         res.status(200).send(allRecipes)
@@ -97,8 +108,44 @@ router.get('/types', async(req, res, next) => { //FUNCIONA
         } catch(err) { console.log(err)}
     });
 
-router.post('/recipe', async (req, res) =>{
+router.post('/recipe', async (req, res) =>{ //FUNCIONA
+    let { name,
+        resume,
+        score,
+        healtyscore,
+        steps,
+        img,
+        diets,
+        type
+    } = req.body
 
+    if(!name || !resume ){
+        res.status(400).send("Falta ingresar el nombre o el resumen")
+    }
+    try{
+       let createRecipe = await Recipe.create({
+           name,
+           resume,
+           score: score || 0,
+           healtyscore: healtyscore || 0,
+           steps,
+           img: img || "https://foodtango.com.au/img/ui/noimage.png",
+           type
+       }) 
+       console.log(createRecipe)
+       let dietsDB = await Diet.findAll({
+           where: {
+               name: diets
+           }
+       })
+    //    console.log(dietsDB)
+       createRecipe.addDiet(dietsDB);
+    //    console.log(createRecipe)
+       res.status(200).send("Se creo de forma exitosa su receta")
+
+    }catch(err){
+        console.log(err)
+    }
 
 })
 

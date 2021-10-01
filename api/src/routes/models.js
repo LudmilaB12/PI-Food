@@ -36,7 +36,7 @@ const getAllinfo = async () =>{
     const apiInfo = await getApiInfo();
     const dbInfo = await getDBifno();
     const allInfo = apiInfo.concat(dbInfo);
-    return apiInfo
+    return allInfo
 }
 
 
