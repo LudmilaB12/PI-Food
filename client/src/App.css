@@ -7,6 +7,16 @@
   pointer-events: none;
 }
 
+.Paginado {
+  background-color: #282c34;
+  color: aliceblue;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  justify-content: space-around;
+  align-items: baseline;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
