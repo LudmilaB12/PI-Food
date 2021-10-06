@@ -5,7 +5,7 @@ const { Diet } = require("../db");
 //armo un array con todas las dietas de la api
 
 const diets = [
-    "Gluten free",
+  "Gluten free",
   "Dairy free",
   "Lacto ovo vegetarian",
   "Vegan",
@@ -13,9 +13,7 @@ const diets = [
   "Primal",
   "Paleolithic",
   "Pescatarian",
-  "Paleo",
-  "Low FODMAP",
-  "Whole30",
+  "Whole 30",
   "Fodmap friendly"
 ]
 
