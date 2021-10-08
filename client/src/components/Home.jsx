@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getRecipes} from "../actions";
+import {getRecipes, getRecipeByType } from "../actions";
 import {Link} from "react-router-dom";
 import CardRecipe from "./CardRecipe";
 import Pages from "./Pages";
@@ -29,25 +29,27 @@ export default function Home() {
         e.preventDefault();
         dispatch(getRecipes);
     }
+
+    function handleFilterStatus(e){
+        dispatch(getRecipeByType(e.target.value))
+    }
     return (
         <div>
             <Link to="/recipe">Crea tu propia receta</Link>
             <h1>Bienvenidos a la pagina</h1>
             <button onClick={ e => handleClick(e)}>Volver a cargar todas las recetas</button>
-            <select>
+            <select onChange={e => handleFilterStatus(e)}>
                 <option value="AllDiets">Todas las dietas</option>
-                <option value="Vegetarian">Vegetariana</option> 
-                <option value="Vegan">Vegana</option>
-                <option value="GlutenFree">Gluten Free</option>
-                <option value="DairyFree">Dairy Free</option>
-                <option value="Lacto">Lacto Ovo Vegetariano</option>
-                <option value="Primal">Primal</option>
-                <option value="Paleolithic">Paleolítica</option>
-                <option value="Pes">Pecetariana</option>
-                <option value="Paleo">Paleo</option>
-                <option value="Low">Baja en carbohidratos fermentables(FODMAPS)</option>
-                <option value="Whole">Whole 30</option>
-                <option value="Fodmap">Fodmap friendly</option>
+                <option value="vegetarian">Vegetariana</option> 
+                <option value="vegan">Vegana</option>
+                <option value="gluten Free">Gluten Free</option>
+                <option value="dairy Free">Dairy Free</option>
+                <option value="lacto ovo vegetarian">Lacto Ovo Vegetariano</option>
+                <option value="primal">Primal</option>
+                <option value="paleolithic">Paleolítica</option>
+                <option value="pescatarian">Pecetariana</option>
+                <option value="whole 30">Whole 30</option>
+                <option value="fodmap friendly">Fodmap friendly</option>
             </select>
             <select>
                 <option value="ascen">A-Z</option>
