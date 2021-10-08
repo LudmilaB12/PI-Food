@@ -120,6 +120,7 @@ router.post('/recipe', async (req, res) =>{ //FUNCIONA
         steps,
         img,
         diets,
+        createInDB,
         type
     } = req.body
 
@@ -134,7 +135,8 @@ router.post('/recipe', async (req, res) =>{ //FUNCIONA
            healtyscore: healtyscore || 0,
            steps,
            img: img || "https://foodtango.com.au/img/ui/noimage.png",
-           type
+           type,
+           createInDB
        }) 
        console.log(createRecipe)
        let dietsDB = await Diet.findAll({

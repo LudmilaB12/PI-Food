@@ -5,6 +5,11 @@ const {Diet, Recipe} = require('../db')
 const getApiInfo = async () => {
     const apiResponse = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`)
     const infoRecipe = await apiResponse.data.results.map( el => {
+        let diets
+        if( el.vegetarian === true){
+            diets = el.diets
+            diets.push("vegetarian")
+        }
         return{
             name: el.title,
             id: el.id,
@@ -13,7 +18,7 @@ const getApiInfo = async () => {
             healtyscore: el.healthScore,
             steps: el.analyzedInstructions,
             img: el.image,
-            diets: el.diets,
+            diets: el.vegetarian === true ? diets : el.diets,
             type: el.dishTypes
         }
     })

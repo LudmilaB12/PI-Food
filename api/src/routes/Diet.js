@@ -14,8 +14,7 @@ const diets = [
   "Paleolithic",
   "Pescatarian",
   "Whole 30",
-  "Fodmap friendly"
-]
+  "Fodmap friendly"]
 
 
 //añadirlas en la db si no están
