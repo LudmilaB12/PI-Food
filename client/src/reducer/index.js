@@ -13,7 +13,7 @@ function rootReducer (state = initialState, action){
            return {
                ...state, //copio el estado
                recipes: action.payload, //y le digo que almacene en recipes (que en principio está vacio) lo que tengo en la action.payload
-               allRecipes: action.payload
+               allRecipes: action.payload //copia que no se modifica
             }
         case "FILTER_BY_TYPE":
             const allrecipes = state.allRecipes
@@ -30,7 +30,67 @@ function rootReducer (state = initialState, action){
                 ...state,
                 recipes: recipesFilter
             }
+        case "SORT_BY_NAME":
+            let sorted = action.payload === "ascen" ? 
+            state.allRecipes.sort(function(a, b){
+                if(a.name > b.name){
+                    return 1
+                }
+                if( b.name > a.name){
+                    return -1;
+                }
+                return 0
+            }) : state.allRecipes.sort(function(a, b){
+                if(a.name > b.name){
+                    return -1;
+                }
+                if(b.name > a.name){
+                    return 1;
+                }
+                return 0
 
+            })
+            return {
+                ...state,
+                recipes: sorted
+            }
+        case "GET_BY_NAME":
+            return {
+                state,
+                recipes: action.payload
+            }
+        case "POST_RECIPE":
+            return{
+                ...state,
+            }
+        case "GET_DIETS":
+            return{
+                ...state,
+                diets: action.payload
+            }
+        case "SORT_BY_SCORE":
+            let sortedScore = action.payload === "menor" ?
+            state.recipes.sort( function(a, b){
+                if(a.score > b.score){
+                    return 1
+                }
+                if(b.score > a.score){
+                    return -1
+                }
+                return 0;
+            }) : state.recipes.sort( function (a, b){
+                if(a.score > b.score){
+                    return -1
+                }
+                if(b.score > a.score){
+                    return 1
+                }
+                return 0;
+            })
+            return {
+                ...state,
+                recipes: sortedScore
+            }
            
    
        default:

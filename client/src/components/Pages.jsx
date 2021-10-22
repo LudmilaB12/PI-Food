@@ -4,8 +4,8 @@ export default function Paginado({recipesPerPage, allRecipes, paginado }) {
     const pageNumber = [];
     
     
-    for(let i = 0; i <= Math.ceil(allRecipes/recipesPerPage); i++){ //acá determino la cantidad de paginas que voy a tener en base de la cantidad de recetas que tengo que mostrar
-        pageNumber.push(i + 1)
+    for(let i = 1; i <= Math.ceil(allRecipes/recipesPerPage); i++){ //acá determino la cantidad de paginas que voy a tener en base de la cantidad de recetas que tengo que mostrar
+        pageNumber.push(i)
     }
     
     return ( //esto es lo que me renderiza el paginad0
